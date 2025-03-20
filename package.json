@@ -3,7 +3,7 @@
   "description": "ElizaOS plugin to integrate with MCP (Model Context Protocol) servers",
   "module": "src/index.ts",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "repository": "https://github.com/fleek-platform/eliza-plugin-mcp",
   "scripts": {
