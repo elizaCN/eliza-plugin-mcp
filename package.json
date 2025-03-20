@@ -5,7 +5,10 @@
   "type": "module",
   "version": "0.0.2",
   "license": "MIT",
-  "repository": "https://github.com/fleek-platform/eliza-plugin-mcp",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fleek-platform/eliza-plugin-mcp.git"
+  },
   "scripts": {
     "build": "bun build ./src/index.ts --outdir ./dist --target node --minify --treeshake",
     "check:write": "bunx @biomejs/biome check --write ./src",
