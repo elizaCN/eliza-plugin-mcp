@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "@types/bun": "latest",
+    "@types/bun": "1.2.5",
     "bumpp": "10.1.0"
   },
   "peerDependencies": {
