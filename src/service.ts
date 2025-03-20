@@ -60,6 +60,7 @@ export class McpService extends Service {
   private async initializeMcpServers(): Promise<void> {
     try {
       const mcpSettings = this.getMcpSettings();
+
       if (!mcpSettings || !mcpSettings.servers) {
         logger.info("No MCP servers configured.");
         return;
@@ -122,7 +123,7 @@ export class McpService extends Service {
     }
   }
 
-  private async buildStdioClientTransport(config: StdioMcpServerConfig) {
+  private async buildStdioClientTransport(name: string, config: StdioMcpServerConfig) {
     if (!config.command) {
       throw new Error(`Missing command for stdio MCP server ${name}`);
     }
@@ -139,7 +140,7 @@ export class McpService extends Service {
     });
   }
 
-  private async buildSseClientTransport(config: SseMcpServerConfig) {
+  private async buildSseClientTransport(name: string, config: SseMcpServerConfig) {
     if (!config.url) {
       throw new Error(`Missing URL for SSE MCP server ${name}`);
     }
@@ -163,8 +164,8 @@ export class McpService extends Service {
 
       const transport: StdioClientTransport | SSEClientTransport =
         config.type === "stdio"
-          ? await this.buildStdioClientTransport(config)
-          : await this.buildSseClientTransport(config);
+          ? await this.buildStdioClientTransport(name, config)
+          : await this.buildSseClientTransport(name, config);
 
       const connection: McpConnection = {
         server: {
