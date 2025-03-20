@@ -23,7 +23,7 @@ import {
 import { buildMcpProviderData } from "./utils/mcp";
 
 export class McpService extends Service {
-  static serviceType = MCP_SERVICE_NAME;
+  static serviceType: string = MCP_SERVICE_NAME;
   capabilityDescription = "Enables the agent to interact with MCP (Model Context Protocol) servers";
 
   private connections: McpConnection[] = [];

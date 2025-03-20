@@ -1,7 +1,9 @@
 {
   "name": "@elizaos-plugins/plugin-mcp",
   "description": "ElizaOS plugin to integrate with MCP (Model Context Protocol) servers",
-  "module": "src/index.ts",
+  "module": "dist/index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "type": "module",
   "version": "0.0.3",
   "license": "MIT",
@@ -18,19 +20,21 @@
   ],
   "scripts": {
     "build": "bun build ./src/index.ts --outdir ./dist --target node --minify --treeshake",
+    "types": "bunx tsc --emitDeclarationOnly --outDir ./dist",
     "check:write": "bunx @biomejs/biome check --write ./src",
     "check": "bunx @biomejs/biome check ./src",
     "ci": "bunx @biomejs/biome ci ./src",
     "version:patch": "bunx bumpp patch --tag -y",
     "version:minor": "bunx bumpp minor --tag -y",
-    "version:major": "bunx bumpp major --tag -y"
+    "version:major": "bunx bumpp major --tag -y",
+    "release:patch": "bun run version:patch && git push --follow-tags",
+    "release:minor": "bun run version:minor && git push --follow-tags",
+    "release:major": "bun run version:major && git push --follow-tags"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@types/bun": "1.2.5",
-    "bumpp": "10.1.0"
-  },
-  "peerDependencies": {
+    "bumpp": "10.1.0",
     "typescript": "^5.0.0"
   },
   "dependencies": {

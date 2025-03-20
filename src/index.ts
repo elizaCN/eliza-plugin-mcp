@@ -17,4 +17,6 @@ const mcpPlugin: Plugin = {
   providers: [provider],
 };
 
+export type { McpService };
+
 export default mcpPlugin;
