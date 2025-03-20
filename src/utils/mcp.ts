@@ -101,8 +101,11 @@ export function getMaxRetries(runtime: IAgentRuntime): number {
         return configValue;
       }
     }
-  } catch (err) {
-    logger.debug("Error reading selection retries config:", err);
+  } catch (error) {
+    logger.debug(
+      "Error reading selection retries config:",
+      error instanceof Error ? error.message : String(error)
+    );
   }
 
   return DEFAULT_MAX_RETRIES;

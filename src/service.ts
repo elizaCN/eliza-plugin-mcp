@@ -48,7 +48,10 @@ export class McpService extends Service {
       try {
         await this.deleteConnection(connection.server.name);
       } catch (error) {
-        logger.error(`Failed to close connection for ${connection.server.name}:`, error);
+        logger.error(
+          `Failed to close connection for ${connection.server.name}:`,
+          error instanceof Error ? error.message : String(error)
+        );
       }
     }
     this.connections = [];
@@ -68,7 +71,10 @@ export class McpService extends Service {
 
       this.mcpProvider = buildMcpProviderData(servers);
     } catch (error) {
-      logger.error("Failed to initialize MCP servers:", error);
+      logger.error(
+        "Failed to initialize MCP servers:",
+        error instanceof Error ? error.message : String(error)
+      );
     }
   }
 
@@ -96,7 +102,10 @@ export class McpService extends Service {
         try {
           await this.connectToServer(name, config);
         } catch (error) {
-          logger.error(`Failed to connect to new MCP server ${name}:`, error);
+          logger.error(
+            `Failed to connect to new MCP server ${name}:`,
+            error instanceof Error ? error.message : String(error)
+          );
         }
       } else if (JSON.stringify(config) !== currentConnection.server.config) {
         try {
@@ -104,7 +113,10 @@ export class McpService extends Service {
           await this.connectToServer(name, config);
           logger.info(`Reconnected MCP server with updated config: ${name}`);
         } catch (error) {
-          logger.error(`Failed to reconnect MCP server ${name}:`, error);
+          logger.error(
+            `Failed to reconnect MCP server ${name}:`,
+            error instanceof Error ? error.message : String(error)
+          );
         }
       }
     }
@@ -211,7 +223,10 @@ export class McpService extends Service {
         await connection.transport.close();
         await connection.client.close();
       } catch (error) {
-        logger.error(`Failed to close transport for ${name}:`, error);
+        logger.error(
+          `Failed to close transport for ${name}:`,
+          error instanceof Error ? error.message : String(error)
+        );
       }
       this.connections = this.connections.filter((conn) => conn.server.name !== name);
     }
@@ -241,7 +256,10 @@ export class McpService extends Service {
 
       return tools;
     } catch (error) {
-      logger.error(`Failed to fetch tools for ${serverName}:`, error);
+      logger.error(
+        `Failed to fetch tools for ${serverName}:`,
+        error instanceof Error ? error.message : String(error)
+      );
       return [];
     }
   }
@@ -256,7 +274,10 @@ export class McpService extends Service {
       const response = await connection.client.listResources();
       return response?.resources || [];
     } catch (error) {
-      logger.warn(`No resources found for ${serverName}:`, error);
+      logger.warn(
+        `No resources found for ${serverName}:`,
+        error instanceof Error ? error.message : String(error)
+      );
       return [];
     }
   }
@@ -271,7 +292,10 @@ export class McpService extends Service {
       const response = await connection.client.listResourceTemplates();
       return response?.resourceTemplates || [];
     } catch (error) {
-      logger.warn(`No resource templates found for ${serverName}:`, error);
+      logger.warn(
+        `No resource templates found for ${serverName}:`,
+        error instanceof Error ? error.message : String(error)
+      );
       return [];
     }
   }
@@ -303,7 +327,10 @@ export class McpService extends Service {
       const config = JSON.parse(connection.server.config);
       timeout = config.timeoutInMillis || DEFAULT_MCP_TIMEOUT_SECONDS;
     } catch (error) {
-      logger.error(`Failed to parse timeout configuration for server ${serverName}:`, error);
+      logger.error(
+        `Failed to parse timeout configuration for server ${serverName}:`,
+        error instanceof Error ? error.message : String(error)
+      );
     }
 
     const result = await connection.client.callTool(
@@ -346,7 +373,10 @@ export class McpService extends Service {
         await this.connectToServer(serverName, JSON.parse(config));
         logger.info(`${serverName} MCP server connected`);
       } catch (error) {
-        logger.error(`Failed to restart connection for ${serverName}:`, error);
+        logger.error(
+          `Failed to restart connection for ${serverName}:`,
+          error instanceof Error ? error.message : String(error)
+        );
         throw new Error(`Failed to connect to ${serverName} MCP server`);
       }
     }

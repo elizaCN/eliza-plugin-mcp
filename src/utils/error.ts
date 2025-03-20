@@ -50,7 +50,10 @@ export async function handleMcpError(
         actions: ["REPLY"],
       });
     } catch (modelError) {
-      logger.error("Failed to generate error response:", modelError);
+      logger.error(
+        "Failed to generate error response:",
+        modelError instanceof Error ? modelError.message : String(modelError)
+      );
 
       await callback({
         thought: `Error calling MCP ${type} and failed to generate a custom response. Providing a generic fallback response.`,
