@@ -17,7 +17,6 @@ export const DEFAULT_MAX_RETRIES = 2;
 
 export type StdioMcpServerConfig = {
   type: "stdio";
-  name: string;
   command?: string;
   args?: string[];
   env?: Record<string, string>;
@@ -27,7 +26,6 @@ export type StdioMcpServerConfig = {
 
 export type SseMcpServerConfig = {
   type: "sse";
-  name: string;
   url: string;
   timeout?: number;
 };
