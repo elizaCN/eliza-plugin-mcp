@@ -1,5 +1,5 @@
 {
-  "name": "@fleek-platform/eliza-plugin-mcp",
+  "name": "@elizaos-plugins/plugin-mcp",
   "description": "ElizaOS plugin to integrate with MCP (Model Context Protocol) servers",
   "module": "src/index.ts",
   "type": "module",
@@ -9,6 +9,13 @@
     "type": "git",
     "url": "git+https://github.com/fleek-platform/eliza-plugin-mcp.git"
   },
+  "tags": [
+    "mcp",
+    "model",
+    "context",
+    "protocol",
+    "elizaos-plugins"
+  ],
   "scripts": {
     "build": "bun build ./src/index.ts --outdir ./dist --target node --minify --treeshake",
     "check:write": "bunx @biomejs/biome check --write ./src",
@@ -16,10 +23,7 @@
     "ci": "bunx @biomejs/biome ci ./src",
     "version:patch": "bunx bumpp patch --tag -y",
     "version:minor": "bunx bumpp minor --tag -y",
-    "version:major": "bunx bumpp major --tag -y",
-    "release:patch": "bun run version:patch && git push --follow-tags",
-    "release:minor": "bun run version:minor && git push --follow-tags",
-    "release:major": "bun run version:major && git push --follow-tags"
+    "version:major": "bunx bumpp major --tag -y"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
@@ -34,5 +38,9 @@
     "@modelcontextprotocol/sdk": "^1.7.0",
     "ajv": "^8.17.1",
     "json5": "^2.2.3"
+  },
+  "agentConfig": {
+    "pluginType": "elizaos:plugin:1.0.0",
+    "pluginParameters": {}
   }
 }
