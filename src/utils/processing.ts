@@ -31,9 +31,7 @@ export function processResourceResult(
     if (content.text) {
       resourceContent += content.text;
     } else if (content.blob) {
-      resourceContent += `[Binary data - ${
-        content.mimeType || "unknown type"
-      }]`;
+      resourceContent += `[Binary data - ${content.mimeType || "unknown type"}]`;
     }
 
     resourceMeta += `Resource: ${content.uri || uri}\n`;
@@ -105,17 +103,10 @@ export async function handleResourceAnalysis(
   resourceMeta: string,
   callback?: HandlerCallback
 ): Promise<void> {
-  await createMcpMemory(
-    runtime,
-    message,
-    "resource",
-    serverName,
-    resourceContent,
-    {
-      uri,
-      isResourceAccess: true,
-    }
-  );
+  await createMcpMemory(runtime, message, "resource", serverName, resourceContent, {
+    uri,
+    isResourceAccess: true,
+  });
 
   const analysisPrompt = createAnalysisPrompt(
     uri,
@@ -186,9 +177,7 @@ export async function handleToolResponse(
   }
 }
 
-export async function sendInitialResponse(
-  callback?: HandlerCallback
-): Promise<void> {
+export async function sendInitialResponse(callback?: HandlerCallback): Promise<void> {
   if (callback) {
     const responseContent: Content = {
       thought:

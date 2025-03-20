@@ -1,9 +1,5 @@
 import type { State } from "@elizaos/core";
-import {
-  type McpProviderData,
-  ResourceSelectionSchema,
-  ToolSelectionSchema,
-} from "../types";
+import { type McpProviderData, ResourceSelectionSchema, ToolSelectionSchema } from "../types";
 import { validateJsonSchema } from "./json";
 
 export interface ToolSelection {
@@ -25,10 +21,7 @@ export function validateToolSelection(
   selection: unknown,
   composedState: State
 ): { success: true; data: ToolSelection } | { success: false; error: string } {
-  const basicResult = validateJsonSchema<ToolSelection>(
-    selection,
-    ToolSelectionSchema
-  );
+  const basicResult = validateJsonSchema<ToolSelection>(selection, ToolSelectionSchema);
   if (!basicResult.success) {
     return { success: false, error: basicResult.error };
   }
@@ -76,13 +69,8 @@ export function validateToolSelection(
 
 export function validateResourceSelection(
   selection: unknown
-):
-  | { success: true; data: ResourceSelection }
-  | { success: false; error: string } {
-  return validateJsonSchema<ResourceSelection>(
-    selection,
-    ResourceSelectionSchema
-  );
+): { success: true; data: ResourceSelection } | { success: false; error: string } {
+  return validateJsonSchema<ResourceSelection>(selection, ResourceSelectionSchema);
 }
 
 export function createToolSelectionFeedbackPrompt(
@@ -93,19 +81,18 @@ export function createToolSelectionFeedbackPrompt(
 ): string {
   let toolsDescription = "";
 
-  for (const [serverName, server] of Object.entries(
-    composedState.values.mcp || {}
-  ) as [string, McpProviderData[string]][]) {
+  for (const [serverName, server] of Object.entries(composedState.values.mcp || {}) as [
+    string,
+    McpProviderData[string],
+  ][]) {
     if (server.status !== "connected") continue;
 
     for (const [toolName, tool] of Object.entries(server.tools || {}) as [
       string,
-      { description?: string }
+      { description?: string },
     ][]) {
       toolsDescription += `Tool: ${toolName} (Server: ${serverName})\n`;
-      toolsDescription += `Description: ${
-        tool.description || "No description available"
-      }\n\n`;
+      toolsDescription += `Description: ${tool.description || "No description available"}\n\n`;
     }
   }
 
@@ -126,14 +113,15 @@ export function createResourceSelectionFeedbackPrompt(
 ): string {
   let resourcesDescription = "";
 
-  for (const [serverName, server] of Object.entries(
-    composedState.values.mcp || {}
-  ) as [string, McpProviderData[string]][]) {
+  for (const [serverName, server] of Object.entries(composedState.values.mcp || {}) as [
+    string,
+    McpProviderData[string],
+  ][]) {
     if (server.status !== "connected") continue;
 
     for (const [uri, resource] of Object.entries(server.resources || {}) as [
       string,
-      { description?: string; name?: string }
+      { description?: string; name?: string },
     ][]) {
       resourcesDescription += `Resource: ${uri} (Server: ${serverName})\n`;
       resourcesDescription += `Name: ${resource.name || "No name available"}\n`;
