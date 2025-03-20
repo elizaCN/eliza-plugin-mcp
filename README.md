@@ -103,6 +103,59 @@ The plugin includes three providers that add MCP capabilities to the agent's con
 
 1. `MCP_SERVERS`: Lists available servers and their tools, resources and prompts
 
+## 🔄 Plugin Flow
+
+The following diagram illustrates the MCP plugin's flow for tool selection and execution:
+
+```mermaid
+graph TD
+    %% Starting point - User request
+    start[User Request] --> action[CALL_TOOL Action]
+
+    %% MCP Server Validation
+    action --> check{MCP Servers Available?}
+    check -->|No| fail[Return No Tools Available]
+    
+    %% Tool Selection Flow
+    check -->|Yes| state[Get MCP Provider Data]
+    state --> prompt[Create Tool Selection Prompt]
+    
+    %% First Model Use - Tool Selection
+    prompt --> model1[Use Language Model for Tool Selection]
+    model1 --> parse[Parse Selection]
+    parse --> retry{Valid Selection?}
+    
+    %% Second Model Use - Retry Selection
+    retry -->|No| feedback[Generate Feedback]
+    feedback --> model2[Use Language Model for Retry]
+    model2 --> parse
+    
+    %% Tool Selection Result
+    retry -->|Yes| toolAvailable{Tool Available?}
+    toolAvailable -->|No| fallback[Fallback Response]
+    
+    %% Tool Execution Flow
+    toolAvailable -->|Yes| callTool[Call MCP Tool]
+    callTool --> processResult[Process Tool Result]
+    
+    %% Memory Creation
+    processResult --> createMemory[Create Memory Record]
+    createMemory --> reasoningPrompt[Create Reasoning Prompt]
+    
+    %% Third Model Use - Response Generation
+    reasoningPrompt --> model3[Use Language Model for Response]
+    model3 --> respondToUser[Send Response to User]
+    
+    %% Styling
+    classDef model fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef decision fill:#bbf,stroke:#333,stroke-width:2px;
+    classDef output fill:#bfb,stroke:#333,stroke-width:2px;
+    
+    class model1,model2,model3 model;
+    class check,retry,toolAvailable decision;
+    class respondToUser,fallback output;
+```
+
 ## 📋 Example: Setting Up Multiple MCP Servers
 
 Here's a complete example configuration with multiple MCP servers of both types:
