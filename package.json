@@ -1,15 +1,15 @@
 {
-  "name": "@fleek-platform/eliza-plugin-mcp",
+  "name": "@elizacn/plugin-mcp",
   "description": "ElizaOS plugin to integrate with MCP (Model Context Protocol) servers",
   "module": "dist/index.js",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
-  "version": "0.0.8",
+  "version": "0.0.1",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fleek-platform/eliza-plugin-mcp.git"
+    "url": "git+https://github.com/elizacn/eliza-plugin-mcp.git"
   },
   "tags": [
     "mcp",
@@ -38,7 +38,8 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "@elizaos/core": "1.0.0-beta.7",
+    "@elizaos/core": "1.0.0-beta.23",
+    "@langchain/core": "^0.3.43",
     "@modelcontextprotocol/sdk": "^1.7.0",
     "ajv": "^8.17.1",
     "json5": "^2.2.3"
@@ -46,5 +47,6 @@
   "agentConfig": {
     "pluginType": "elizaos:plugin:1.0.0",
     "pluginParameters": {}
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
